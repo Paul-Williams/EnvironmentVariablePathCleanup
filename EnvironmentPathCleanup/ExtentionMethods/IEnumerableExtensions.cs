@@ -15,7 +15,7 @@ public static class IEnumerableExtensions
   {
     foreach (var x in seq) 
       if (!string.IsNullOrWhiteSpace(x))  
-        yield return x[^1] == '\\' ? x : x + '\\';
+        yield return x;
   }
 
 
