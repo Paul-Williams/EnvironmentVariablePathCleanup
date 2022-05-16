@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="PW.Common" Version="3.0.5" />
-    <PackageReference Include="PW.WinForms.DataBinding" Version="1.0.2" />
+    <PackageReference Include="PW.WinForms.DataBinding" Version="1.0.3" />
   </ItemGroup>
 
 	<ItemGroup>
