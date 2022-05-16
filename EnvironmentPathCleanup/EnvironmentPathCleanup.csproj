@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+		<LangVersion>preview</LangVersion>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="PW.Common" Version="3.0.5" />
+    <PackageReference Include="PW.WinForms.DataBinding" Version="1.0.2" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<Using Include="PW.WinForms.DataBinding" />
+		<Using Include="EnvironmentPathCleanup.ExtentionMethods" />		
+	</ItemGroup>
+	
+	
+</Project>
