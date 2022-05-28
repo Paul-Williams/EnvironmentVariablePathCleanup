@@ -42,6 +42,8 @@
       this.groupBox1 = new System.Windows.Forms.GroupBox();
       this.UserDirectoriesRemovedLabel = new System.Windows.Forms.Label();
       this.MachineDirectoriesRemovedLabel = new System.Windows.Forms.Label();
+      this.label5 = new System.Windows.Forms.Label();
+      this.label6 = new System.Windows.Forms.Label();
       this.MainLayout.SuspendLayout();
       this.FooterLayout.SuspendLayout();
       this.groupBox1.SuspendLayout();
@@ -192,6 +194,8 @@
       // groupBox1
       // 
       this.groupBox1.Anchor = System.Windows.Forms.AnchorStyles.Left;
+      this.groupBox1.Controls.Add(this.label6);
+      this.groupBox1.Controls.Add(this.label5);
       this.groupBox1.Controls.Add(this.UserDirectoriesRemovedLabel);
       this.groupBox1.Controls.Add(this.MachineDirectoriesRemovedLabel);
       this.groupBox1.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
@@ -206,7 +210,7 @@
       // 
       this.UserDirectoriesRemovedLabel.AutoSize = true;
       this.UserDirectoriesRemovedLabel.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-      this.UserDirectoriesRemovedLabel.Location = new System.Drawing.Point(6, 51);
+      this.UserDirectoriesRemovedLabel.Location = new System.Drawing.Point(101, 54);
       this.UserDirectoriesRemovedLabel.Name = "UserDirectoriesRemovedLabel";
       this.UserDirectoriesRemovedLabel.Size = new System.Drawing.Size(63, 17);
       this.UserDirectoriesRemovedLabel.TabIndex = 1;
@@ -216,11 +220,31 @@
       // 
       this.MachineDirectoriesRemovedLabel.AutoSize = true;
       this.MachineDirectoriesRemovedLabel.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-      this.MachineDirectoriesRemovedLabel.Location = new System.Drawing.Point(6, 28);
+      this.MachineDirectoriesRemovedLabel.Location = new System.Drawing.Point(101, 25);
       this.MachineDirectoriesRemovedLabel.Name = "MachineDirectoriesRemovedLabel";
       this.MachineDirectoriesRemovedLabel.Size = new System.Drawing.Size(63, 17);
       this.MachineDirectoriesRemovedLabel.TabIndex = 0;
       this.MachineDirectoriesRemovedLabel.Text = "Removed";
+      // 
+      // label5
+      // 
+      this.label5.AutoSize = true;
+      this.label5.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      this.label5.Location = new System.Drawing.Point(6, 25);
+      this.label5.Name = "label5";
+      this.label5.Size = new System.Drawing.Size(89, 17);
+      this.label5.TabIndex = 2;
+      this.label5.Text = "Machine Path:";
+      // 
+      // label6
+      // 
+      this.label6.AutoSize = true;
+      this.label6.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+      this.label6.Location = new System.Drawing.Point(6, 54);
+      this.label6.Name = "label6";
+      this.label6.Size = new System.Drawing.Size(67, 17);
+      this.label6.TabIndex = 3;
+      this.label6.Text = "User Path:";
       // 
       // MainForm
       // 
@@ -257,5 +281,7 @@
     private GroupBox groupBox1;
     private Label UserDirectoriesRemovedLabel;
     private Label MachineDirectoriesRemovedLabel;
+    private Label label6;
+    private Label label5;
   }
 }
