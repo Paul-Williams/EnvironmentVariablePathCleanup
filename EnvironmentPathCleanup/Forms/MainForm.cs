@@ -22,7 +22,7 @@ public partial class MainForm : Form
 
   }
 
-  private void ShowExceptionDialog(Exception ex)
+  private static void ShowExceptionDialog(Exception ex)
   {
     MessageBox.Show($"{ex.Message}\n\n{ex}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
@@ -37,7 +37,7 @@ public partial class MainForm : Form
 
 
 
-    TaskDialog.ShowDialog(this, page, TaskDialogStartupLocation.CenterScreen);
+    //TaskDialog.ShowDialog(this, page, TaskDialogStartupLocation.CenterScreen);
 
 
   }

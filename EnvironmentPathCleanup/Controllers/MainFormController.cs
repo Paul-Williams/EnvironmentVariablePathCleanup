@@ -19,7 +19,6 @@ internal class MainFormController : BindingObjectBase
 
   }
 
-  public int Delme;
 
   private void Init()
   {
