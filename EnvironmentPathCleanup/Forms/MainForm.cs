@@ -10,8 +10,6 @@ public partial class MainForm : Form
 
     try
     {
-      //throw new  InvalidCastException("It has all gone horribly wrong!",new InvalidDataException("Beetroot"));
-
       BindControls();
     }
     catch (Exception ex)
@@ -19,41 +17,26 @@ public partial class MainForm : Form
       ShowExceptionDialog(ex);
       Environment.Exit(ex.HResult);
     }
-
   }
 
   private static void ShowExceptionDialog(Exception ex)
   {
     MessageBox.Show($"{ex.Message}\n\n{ex}", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-    //var page = new TaskDialogPage
-    //{
-    //  Caption = ex.Message,
-    //  Icon = TaskDialogIcon.Error,
-    //  Text = ex.ToString()
-    //};
-
-    //page.Buttons.Add(new TaskDialogButton("Close"));
-
-
-
-    //TaskDialog.ShowDialog(this, page, TaskDialogStartupLocation.CenterScreen);
-
-
   }
 
   private void BindControls()
   {
 
     new Binder<MainFormController>(new MainFormController())
-      .BindText(OriginalMachinePathTextBox, x => x.OriginalMachinePath)
-      .BindText(OriginalUserPathTextBox, x => x.OriginalUserPath)
-      .BindText(CleanedMachinePathTextBox, x => x.CleanedMachinePath)
-      .BindText(CleanedUserPathTextBox, x => x.CleanedUserPath)
+      .BindList(CurrentMachineEntriesListBox, x => x.CurrentMachineEntries)
+      .BindList(CurrentUserEntriesListBox, x => x.CurrentUserEntries)
+      .BindList(ProposedMachineEntriesListBox, x => x.ProposedMachineEntries)
+      .BindList(ProposedUserEntriesListBox, x => x.ProposedUserEntries)
       .BindClick(SaveButton, c => c.Save)
       .BindEnabled(SaveButton, x => x.CanSave)
-      .BindText(MachineDirectoriesRemovedLabel, x => x.MachinePathDirectoriesRemoved)
-      .BindText(UserDirectoriesRemovedLabel, x => x.UserPathDirectoriesRemoved);
+      .BindClick(RefreshButton, x => x.Refresh)
+      .BindText(MachineDirectoriesRemovedLabel, x => x.MachinePathEntriesRemoved)
+      .BindText(UserDirectoriesRemovedLabel, x => x.UserPathEntriesRemoved);
   }
 
 }

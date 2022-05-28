@@ -8,11 +8,21 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+    <Version>2.0.0</Version>
+    <Title>Environment Path Cleanup</Title>
+    <Authors>Paul Williams</Authors>
+    <Company>PWDevs</Company>
+    <Product>Environment Path Cleanup</Product>
+    <Description>Performs clean-up of duplicate and missing directories from system and user path environmental variables.</Description>
+    <Copyright>© PWDevs 2022</Copyright>
+    <PackageProjectUrl>https://github.com/Paul-Williams/EnvironmentPathCleanup</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Paul-Williams/EnvironmentPathCleanup</RepositoryUrl>
+    <NeutralLanguage>en-GB</NeutralLanguage>	
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="PW.Common" Version="3.0.5" />
-    <PackageReference Include="PW.WinForms.DataBinding" Version="1.0.3" />
+    <PackageReference Include="PW.Common" Version="4.0.1" />
+    <PackageReference Include="PW.WinForms.DataBinding" Version="1.0.6" />
   </ItemGroup>
 
 	<ItemGroup>

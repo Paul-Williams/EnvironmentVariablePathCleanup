@@ -1,89 +1,77 @@
 ﻿namespace EnvironmentPathCleanup.Controllers;
 
+using System.ComponentModel;
+using System.Linq;
+using static PW.Extensions.ICollectionExtensions;
+using static PW.Extensions.IEnumerableExtensions;
+
 internal class MainFormController : BindingObjectBase
 {
-  #region Backing Fields
-  private string? cleanedMachineName;
-
-  private string? cleanedUserPath;
-
-  private string? originalMachinePath;
-
-  private string? originalUserPath;
-  #endregion
-
-
   public MainFormController()
   {
     Init();
+  }
 
+  private static IList<string> GetPathEntries(EnvironmentVariableTarget target)
+  {
+    return Environment.GetEnvironmentVariable("PATH", target) is string path
+      ? path.Split(';', StringSplitOptions.RemoveEmptyEntries)
+      : (IList<string>)new List<string>();
+  }
+
+
+  private static int InitListPair(BindingList<string> original!!, BindingList<string> cleaned!!, EnvironmentVariableTarget source)
+  {
+    original.RaiseListChangedEvents = false;
+    cleaned.RaiseListChangedEvents = false;
+
+    original.Clear();
+    cleaned.Clear();
+
+    GetPathEntries(source).ForEach(original.Add);
+
+    if (original.Count != 0) Cleanup(original).ForEach(cleaned.Add);
+
+    original.RaiseListChangedEvents = true;
+    cleaned.RaiseListChangedEvents = true;
+
+    return original.Count - cleaned.Count;
   }
 
 
   private void Init()
   {
-    OriginalMachinePath = Environment.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.Machine);
-    OriginalUserPath = Environment.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.User);
-
-    if (OriginalMachinePath != null)
-    {
-      var originalDirectories = OriginalMachinePath.Split(';', StringSplitOptions.RemoveEmptyEntries);
-      var cleanedDirectories = Cleanup(originalDirectories);
-
-      MachinePathDirectoriesRemoved = originalDirectories.Length - cleanedDirectories.Length;
-      CleanedMachinePath = string.Join(';', cleanedDirectories);
-    }
-
-    if (OriginalUserPath != null)
-    {
-      var originalDirectories = OriginalUserPath.Split(';', StringSplitOptions.RemoveEmptyEntries);
-      var cleanedDirectories = Cleanup(originalDirectories);
-
-      UserPathDirectoriesRemoved = originalDirectories.Length - cleanedDirectories.Length;
-      CleanedUserPath = string.Join(';', cleanedDirectories);
-    }
+    MachinePathEntriesRemoved = InitListPair(CurrentMachineEntries, ProposedMachineEntries, EnvironmentVariableTarget.Machine);
+    UserPathEntriesRemoved = InitListPair(CurrentUserEntries, ProposedUserEntries, EnvironmentVariableTarget.User)
+      + ProposedUserEntries.RemoveAll(ProposedMachineEntries);
   }
 
-  public string? CleanedMachinePath
-  {
-    get { return cleanedMachineName; }
-    set { _ = SetPropertyValue(ref cleanedMachineName, value); }
-  }
 
-  public string? CleanedUserPath
-  {
-    get { return cleanedUserPath; }
-    set { _ = SetPropertyValue(ref cleanedUserPath, value); }
-  }
+  public BindingList<string> ProposedMachineEntries { get; } = new();
 
-  public string? OriginalMachinePath
-  {
-    get { return originalMachinePath; }
-    set { _ = SetPropertyValue(ref originalMachinePath, value); }
-  }
+  public BindingList<string> ProposedUserEntries { get; } = new();
 
-  public string? OriginalUserPath
-  {
-    get { return originalUserPath; }
-    set { _ = SetPropertyValue(ref originalUserPath, value); }
-  }
+  public BindingList<string> CurrentMachineEntries { get; } = new();
+
+  public BindingList<string> CurrentUserEntries { get; } = new();
 
   public bool CanSave => true; // Hack
 
-  public int MachinePathDirectoriesRemoved { get; set; }
+  public int MachinePathEntriesRemoved { get; set; }
 
-  public int UserPathDirectoriesRemoved { get; set; }
+  public int UserPathEntriesRemoved { get; set; }
 
 
   public void Save()
   {
     if (!CanSave) throw new InvalidOperationException("CanSave is false.");
 
-    Environment.SetEnvironmentVariable("PATH", CleanedMachinePath, EnvironmentVariableTarget.Machine);
-    Environment.SetEnvironmentVariable("PATH", CleanedUserPath, EnvironmentVariableTarget.User);
+    Environment.SetEnvironmentVariable("PATH", string.Join(';', ProposedMachineEntries), EnvironmentVariableTarget.Machine);
+    Environment.SetEnvironmentVariable("PATH", string.Join(';', ProposedUserEntries), EnvironmentVariableTarget.User);
     Init();
   }
 
+  public void Refresh() => Init();
 
   /// <summary>
   /// Cleans up a list of directories by removing duplicates and non-existent ones.
@@ -102,9 +90,9 @@ internal class MainFormController : BindingObjectBase
   {
 
     return directories
-      .ExcludeNullAndWhiteSpace()
-      .EnsureIsSlashTerminated()
-      .Distinct(StringComparer.OrdinalIgnoreCase)
+      .SkipNullAndWhiteSpace()
+      .SlashTerminate()
+      .DistinctIgnoreCase()
       .Where(Directory.Exists)
       .ToArray();
 
